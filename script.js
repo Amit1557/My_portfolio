@@ -5,6 +5,35 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     // ============================================
+    // THEME TOGGLE FUNCTIONALITY
+    // ============================================
+    const themeToggle = document.getElementById('themeToggle');
+    const body = document.body;
+    
+    // Check for saved theme preference or default to 'dark'
+    const currentTheme = localStorage.getItem('theme') || 'dark';
+    if (currentTheme === 'light') {
+        body.classList.add('light-theme');
+    }
+    
+    // Toggle theme on button click
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('light-theme');
+            
+            // Save theme preference
+            const theme = body.classList.contains('light-theme') ? 'light' : 'dark';
+            localStorage.setItem('theme', theme);
+            
+            // Add animation effect
+            themeToggle.style.transform = 'rotate(360deg) scale(1.2)';
+            setTimeout(() => {
+                themeToggle.style.transform = 'scale(1)';
+            }, 300);
+        });
+    }
+
+    // ============================================
     // NAVBAR FUNCTIONALITY
     // ============================================
     const navbar = document.querySelector('.navbar');
@@ -120,29 +149,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ============================================
-    // SKILL BARS ANIMATION
-    // ============================================
-    const skillBars = document.querySelectorAll('.skill-progress');
-    
-    function animateSkills() {
-        skillBars.forEach(bar => {
-            const progress = parseInt(bar.getAttribute('data-progress') || '0', 10);
-            const rect = bar.getBoundingClientRect();
-            const windowHeight = window.innerHeight;
-            
-            if (rect.top < windowHeight && rect.bottom > 0) {
-                bar.style.width = progress + '%';
-            }
-        });
-    }
-
-    window.addEventListener('scroll', animateSkills);
-    animateSkills(); // Initial check
-
-    // ============================================
     // SCROLL REVEAL ANIMATION
     // ============================================
-    const scrollRevealElements = document.querySelectorAll('.skill-category, .certification-card, .project-card, .about-text, .contact-content');
+    const scrollRevealElements = document.querySelectorAll('.skill-domain, .certification-card, .project-card, .about-text, .contact-content');
     
     scrollRevealElements.forEach(el => {
         el.classList.add('scroll-reveal');
